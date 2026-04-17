@@ -22,5 +22,5 @@ le serveur backend est configuré à: http://localhost:4000
 ### (Optionnel) nettoyage de la base de données
 
 Pour réinitialiser la base de données, lancez depuis le dossier backend la commande: 
-`node seed.js`
+`node scripts/init-reset.js`
 

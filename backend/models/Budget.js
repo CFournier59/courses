@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const auth = require('../middleware/auth');
-const transactionSchema = require('/Transaction')
 
 const budgetSchema = mongoose.Schema({
     date: { type: Date, required: true },
