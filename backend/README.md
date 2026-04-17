@@ -1,4 +1,4 @@
-# Mon vieux Grimoire
+# Courses
 
 
 ## Comment lancer la partie backend du projet ? 
@@ -9,9 +9,6 @@ Dans le terminal, placez vous dans le dossier backend en tapant la commande `cd 
 
 Pour installer les dépendances, lancez-la commande:
 `npm install`
-
-Le paquet "mongoose-unique-validator" n'étant pas à jour, il peut y avoir des erreurs de dépendances dans le script d'installation. Le cas échéant, lancez la commande: 
-`npm install --force`
 
 ### 2 utilisation des identifiants d'accès à la base de données
 
