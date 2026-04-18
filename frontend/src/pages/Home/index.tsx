@@ -12,5 +12,7 @@ export default function Home() {
       }
    }, [token, navigate])
 
+   console.log(token)
+
    return <h1>Hello World</h1>
 }

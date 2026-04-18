@@ -6,7 +6,7 @@ import { useUser } from '../../lib/customHooks'
 import { storeInLocalStorage } from '../../lib/common'
 
 // Type du user renvoyé par l'API
-interface SignInResponse {
+export interface SignInResponse {
    token: string
    userId: string
    email: string
@@ -16,7 +16,7 @@ interface SignInProps {
    setUser: (user: SignInResponse) => void
 }
 
-export default function SignIn({ setUser }: SignInProps) {
+export default function Login({ setUser }: SignInProps) {
    const navigate = useNavigate()
    const { connectedUser, auth } = useUser()
 

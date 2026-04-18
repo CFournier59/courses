@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const budgetRoutes = require('./routes/book');
+const budgetRoutes = require('./routes/budget');
 const userRoutes = require('./routes/user');
 const transactionRoutes = require('./routes/transaction')
 const dotenv = require('dotenv').config();
@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 // routes de l'application - voir les fichiers dans le dossier routes
-app.use('/api/budgets', bookRoutes);
+app.use('/api/budgets', budgetRoutes);
 app.use('/api/transactions', transactionRoutes)
 app.use('/api/auth', userRoutes);
 
