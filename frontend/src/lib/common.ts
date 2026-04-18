@@ -1,0 +1,216 @@
+import { API_ROUTES } from '../utils/constant.ts'
+import axios from 'axios'
+// -----------------------------
+// Types
+// -----------------------------
+
+export interface Rating {
+   userId: string
+   grade: number
+}
+
+export interface Book {
+   _id?: string
+   id?: string
+   userId: string
+   title: string
+   author: string
+   year: number
+   genre: string
+   ratings: Rating[]
+   averageRating: number
+   imageUrl?: string
+}
+
+// -----------------------------
+// Helpers
+// -----------------------------
+
+function formatBooks(bookArray: Book[]): Book[] {
+   return bookArray.map((book) => ({
+      ...book,
+      id: book._id,
+   }))
+}
+
+// -----------------------------
+// LocalStorage
+// -----------------------------
+
+export function storeInLocalStorage(token: string, userId: string): void {
+   localStorage.setItem('token', token)
+   localStorage.setItem('userId', userId)
+}
+
+export function getFromLocalStorage(key: string): string | null {
+   return localStorage.getItem(key)
+}
+
+// -----------------------------
+// Auth
+// -----------------------------
+
+export async function getAuthenticatedUser(): Promise<{
+   authenticated: boolean
+   user: { userId: string | null; token: string | null } | null
+}> {
+   const defaultReturn = { authenticated: false, user: null }
+
+   try {
+      const token = getFromLocalStorage('token')
+      const userId = getFromLocalStorage('userId')
+
+      if (!token) return defaultReturn
+
+      return {
+         authenticated: true,
+         user: { userId, token },
+      }
+   } catch (err) {
+      console.error('getAuthenticatedUser error:', err)
+      return defaultReturn
+   }
+}
+
+// -----------------------------
+// Books API
+// -----------------------------
+
+export async function getBooks(): Promise<Book[]> {
+   try {
+      const response = await axios.get<Book[]>(API_ROUTES.BOOKS)
+      return formatBooks(response.data)
+   } catch (err) {
+      console.error(err)
+      return []
+   }
+}
+
+export async function getBook(id: string): Promise<Book | null> {
+   try {
+      const response = await axios.get<Book>(`${API_ROUTES.BOOKS}/${id}`)
+      return { ...response.data, id: response.data._id }
+   } catch (err) {
+      console.error(err)
+      return null
+   }
+}
+
+export async function getBestRatedBooks(): Promise<Book[]> {
+   try {
+      const response = await axios.get<Book[]>(API_ROUTES.BEST_RATED)
+      return formatBooks(response.data)
+   } catch (err) {
+      console.error(err)
+      return []
+   }
+}
+
+export async function deleteBook(id: string): Promise<boolean> {
+   try {
+      await axios.delete(`${API_ROUTES.BOOKS}/${id}`, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+         },
+      })
+      return true
+   } catch (err) {
+      console.error(err)
+      return false
+   }
+}
+
+export async function rateBook(
+   id: string,
+   userId: string,
+   rating: number,
+): Promise<Book | string> {
+   const data = {
+      userId,
+      rating: Number(rating),
+   }
+
+   try {
+      const response = await axios.post<Book>(
+         `${API_ROUTES.BOOKS}/${id}/rating`,
+         data,
+         {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+         },
+      )
+
+      return { ...response.data, id: response.data._id }
+   } catch (err: any) {
+      console.error(err)
+      return err.message
+   }
+}
+
+export async function addBook(data: any): Promise<any> {
+   const userId = localStorage.getItem('userId') ?? ''
+
+   const book: Book = {
+      userId,
+      title: data.title,
+      author: data.author,
+      year: Number(data.year),
+      genre: data.genre,
+      ratings: [
+         {
+            userId,
+            grade: data.rating ? Number(data.rating) : 0,
+         },
+      ],
+      averageRating: Number(data.rating),
+   }
+
+   const formData = new FormData()
+   formData.append('book', JSON.stringify(book))
+   formData.append('image', data.file[0])
+
+   try {
+      return await axios.post(API_ROUTES.BOOKS, formData, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+         },
+      })
+   } catch (err: any) {
+      console.error(err)
+      return { error: true, message: err.message }
+   }
+}
+
+export async function updateBook(data: any, id: string): Promise<any> {
+   const userId = localStorage.getItem('userId') ?? ''
+
+   const book = {
+      userId,
+      title: data.title,
+      author: data.author,
+      year: Number(data.year),
+      genre: data.genre,
+   }
+
+   let payload: FormData | typeof book
+
+   if (data.file?.[0]) {
+      payload = new FormData()
+      payload.append('book', JSON.stringify(book))
+      payload.append('image', data.file[0])
+   } else {
+      payload = book
+   }
+
+   try {
+      return await axios.put(`${API_ROUTES.BOOKS}/${id}`, payload, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+         },
+      })
+   } catch (err: any) {
+      console.error(err)
+      return { error: true, message: err.message }
+   }
+}
