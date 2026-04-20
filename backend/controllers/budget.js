@@ -2,7 +2,7 @@ const Budget = require('../models/Budget');
 const fs = require('fs');
 
 exports.displayBudgets = (req, res, next) => {
-    Budget.find().sort({ classified: true })
+    Budget.find()
     .then(budgets => res.status(200).json(budgets))
     .catch(error => res.status(400).json({ error }));
 }

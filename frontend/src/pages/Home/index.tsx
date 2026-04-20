@@ -1,18 +1,7 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router'
-import { getFromLocalStorage } from '../../lib/common'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
-   const navigate = useNavigate()
-   const token = getFromLocalStorage('token')
-
-   useEffect(() => {
-      if (!token) {
-         navigate('/login')
-      }
-   }, [token, navigate])
-
-   console.log(token)
+   const [currentBudget, setCurrentBudget] = useState<Boolean>(false)
 
    return <h1>Hello World</h1>
 }

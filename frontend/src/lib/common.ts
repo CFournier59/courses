@@ -9,27 +9,21 @@ export interface Rating {
    grade: number
 }
 
-export interface Book {
+export interface Budget {
    _id?: string
-   id?: string
-   userId: string
-   title: string
-   author: string
-   year: number
-   genre: string
-   ratings: Rating[]
-   averageRating: number
-   imageUrl?: string
+   date: Date
+   amount: Number
+   classified: Boolean
 }
 
 // -----------------------------
 // Helpers
 // -----------------------------
 
-function formatBooks(bookArray: Book[]): Book[] {
-   return bookArray.map((book) => ({
-      ...book,
-      id: book._id,
+function formatBudgets(budgetArray: Budget[]): Budget[] {
+   return budgetArray.map((budget) => ({
+      ...budget,
+      id: budget._id,
    }))
 }
 
@@ -73,13 +67,17 @@ export async function getAuthenticatedUser(): Promise<{
 }
 
 // -----------------------------
-// Books API
+// Budgets API
 // -----------------------------
 
-export async function getBooks(): Promise<Book[]> {
+export async function getBudgets(): Promise<Budget[]> {
    try {
-      const response = await axios.get<Book[]>(API_ROUTES.BOOKS)
-      return formatBooks(response.data)
+      const response = await axios.get<Budget[]>(API_ROUTES.BUDGETS, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+         },
+      })
+      return formatBudgets(response.data)
    } catch (err) {
       console.error(err)
       return []

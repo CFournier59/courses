@@ -14,9 +14,10 @@ export interface SignInResponse {
 
 interface SignInProps {
    setUser: (user: SignInResponse) => void
+   setToken: (token: string) => void
 }
 
-export default function Login({ setUser }: SignInProps) {
+export default function Login({ setUser, setToken }: SignInProps) {
    const navigate = useNavigate()
    const { connectedUser, auth } = useUser()
 
@@ -55,6 +56,7 @@ export default function Login({ setUser }: SignInProps) {
 
          // Stockage du token
          storeInLocalStorage(response.data.token, response.data.userId)
+         setToken(response.data.token)
 
          // Mise à jour du user global
          setUser(response.data)
