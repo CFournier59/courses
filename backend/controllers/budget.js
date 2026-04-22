@@ -27,7 +27,8 @@ exports.createBudget = (req, res, next) => {
 exports.classifyBudget = (req, res, next) => {
     
         // mise à jour du budget dans la base de données
-        Budget.updateOne({ _id: req.params.id}, { _id: req.params.id, classified: true})
+        console.log("requête en cours")
+        Budget.updateOne({ _id: req.params.id}, { classified: true})
         .then(() => res.status(200).json({message: 'Budget cloturé !'}))
         .catch(error => res.status(401).json({ error }));   
 

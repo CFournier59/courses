@@ -116,6 +116,24 @@ export async function addBudget(data: number): Promise<any> {
    }
 }
 
+export async function classifyBudget(budgetId: string): Promise<any> {
+   try {
+      return await axios.put(
+         `${API_ROUTES.BUDGETS}/${budgetId}`,
+         {},
+         {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem('token')}`,
+               'Content-Type': 'application/json',
+            },
+         },
+      )
+   } catch (err: any) {
+      console.error(err)
+      return { error: true, message: err.message }
+   }
+}
+
 // -----------------------------
 // Transactions API
 // -----------------------------

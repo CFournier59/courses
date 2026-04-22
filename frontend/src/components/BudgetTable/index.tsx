@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Budget, Transaction } from '../../lib/common'
 import { getTransactions } from '../../lib/common'
+import ClassifyBudget from '../ClassifyBudget'
 
 interface BudgetTableProps {
    budget: Budget
@@ -33,7 +34,14 @@ export default function BudgetTable({ budget, addedTsx }: BudgetTableProps) {
          <h3>
             Restant: {remaining.toFixed(2)} / {budget.amount.toFixed(2)} €
          </h3>
-         {!budget.classified && <button>Clôturer</button>}
+         {!budget.classified && (
+            <ClassifyBudget
+               budgetId={budget._id!}
+               totalSpentClem={totalSpentClem}
+               totalSpentChlo={totalSpentChlo}
+               remaining={remaining}
+            />
+         )}
          <table>
             <thead>
                <tr>
