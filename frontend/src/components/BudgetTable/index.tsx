@@ -1,14 +1,39 @@
-import type { Budget } from '../../lib/common'
+import { useEffect, useState } from 'react'
+import type { Budget, Transaction } from '../../lib/common'
+import { getTransactions } from '../../lib/common'
 
 interface BudgetTableProps {
    budget: Budget
+   addedTsx: number
 }
 
-export default function BudgetTable({ budget }: BudgetTableProps) {
+export default function BudgetTable({ budget, addedTsx }: BudgetTableProps) {
+   const [transactions, setTransactions] = useState<Transaction[]>([])
+
+   useEffect(() => {
+      const fetchTransactions = async () => {
+         const txns = await getTransactions(budget._id!)
+         setTransactions(txns)
+      }
+      fetchTransactions()
+   }, [budget._id, addedTsx])
+
+   const totalSpent = transactions.reduce((sum, tx) => sum + tx.amount, 0)
+   const totalSpentClem = transactions
+      .filter((tx) => tx.userName === 'clem')
+      .reduce((sum, tx) => sum + tx.amount, 0)
+   const totalSpentChlo = transactions
+      .filter((tx) => tx.userName === 'chlo')
+      .reduce((sum, tx) => sum + tx.amount, 0)
+   const remaining = budget.amount - totalSpent
+
    return (
       <>
          <h2>{budget.date.toString()}</h2>
-         <h3>Restant: 600 / {budget.amount.toFixed(2)}</h3>
+         <h3>
+            Restant: {remaining.toFixed(2)} / {budget.amount.toFixed(2)} €
+         </h3>
+         {!budget.classified && <button>Clôturer</button>}
          <table>
             <thead>
                <tr>
@@ -18,8 +43,20 @@ export default function BudgetTable({ budget }: BudgetTableProps) {
                   <th>montant</th>
                </tr>
             </thead>
-            <tbody>{/* Affichage des budgets */}</tbody>
+            <tbody>
+               {transactions.map((tx) => (
+                  <tr key={tx._id}>
+                     <td>{tx.date.toString()}</td>
+                     <td>{tx.userName}</td>
+                     <td>{tx.description}</td>
+                     <td>{tx.amount.toFixed(2)} €</td>
+                  </tr>
+               ))}
+            </tbody>
          </table>
+         <h3>Total dépensé par Clem: {totalSpentClem.toFixed(2)}</h3>
+         <h3>Total dépensé par Chlo: {totalSpentChlo.toFixed(2)}</h3>
+         <h3>Total dépensé: {totalSpent.toFixed(2)}</h3>
       </>
    )
 }

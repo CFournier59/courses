@@ -3,7 +3,8 @@ const fs = require('fs');
 
 
 exports.displayTransactions = (req, res, next) => {
-    Transaction.find().sort({ budgetId: req.params.id })
+    console.log("requête en cours")
+    Transaction.find({ budgetId: req.params.id })
     .then(transactions => res.status(200).json(transactions))
     .catch(error => res.status(400).json({ error }));
 }
