@@ -15,14 +15,9 @@ exports.getThisTransaction = (req, res, next) => {
 }
 
 exports.createTransaction = (req, res, next) => {
-    // parsing de l'objet transaction
-    const transactionObject = JSON.parse(req.body.transaction);
-    delete transactionObject._userId;
     // création d'une instance du modèle Transaction
     const transaction = new Transaction({
-         ...transactionObject,
-         userId: req.auth.userId,
-         budgetId: req.params.id,
+         ...req.body
      });
     // enregistrement dans la base de données
      transaction.save()
