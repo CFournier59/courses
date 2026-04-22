@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bookRoutes = require('./routes/book');
+const budgetRoutes = require('./routes/budget');
 const userRoutes = require('./routes/user');
+const transactionRoutes = require('./routes/transaction')
 const dotenv = require('dotenv').config();
 const path = require('path');
 
@@ -9,7 +10,7 @@ const path = require('path');
 const app = express();
 
 // connexion à la base de données MongoDB
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_DB}.okbdkgb.mongodb.net/vieux-grimoire?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_DB}.okbdkgb.mongodb.net/courses?retryWrites=true&w=majority`)
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
@@ -25,8 +26,8 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 // routes de l'application - voir les fichiers dans le dossier routes
-app.use('/api/books', bookRoutes);
+app.use('/api/budgets', budgetRoutes);
+app.use('/api/transactions', transactionRoutes)
 app.use('/api/auth', userRoutes);
-app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;

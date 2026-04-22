@@ -2,26 +2,8 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
-
-exports.signup = (req, res, next) => {
-    // hachage du mot de passe
-    bcrypt.hash(req.body.password, 10)
-        .then(hash => {
-            const user = new User({
-                email: req.body.email,
-                password: hash
-            });
-            // enregistrement dans la base de données
-            user.save()
-                .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-                .catch(error => res.status(400).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
-}
-
 exports.login = (req, res, next) => {
-    User.findOne({email: req.body.email})
+    User.findOne({name: req.body.name})
     .then(user => {
         // vérifier si l'utilisateur existe
         if(!user){
@@ -39,7 +21,7 @@ exports.login = (req, res, next) => {
                 token: jwt.sign(
                     { userId: user._id },
                     'oY7iF!qhxi$KytG#ji3!fhbGksyQq?45PpbGr5g!5itTzE8z$m6JbSki46YoTpDJ',
-                    { expiresIn: '24h' }
+                    { expiresIn: '150h' }
                 )
             })
         }).catch(error => res.status(500).json({ error }));
