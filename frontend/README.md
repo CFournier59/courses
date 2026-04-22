@@ -1,4 +1,4 @@
-# Mon vieux Grimoire
+# courses
 
 
 ## Comment lancer la partie frontend du projet ? 

@@ -2,7 +2,7 @@ const Budget = require('../models/Budget');
 const fs = require('fs');
 
 exports.displayBudgets = (req, res, next) => {
-    Budget.find().sort({ classified: true })
+    Budget.find()
     .then(budgets => res.status(200).json(budgets))
     .catch(error => res.status(400).json({ error }));
 }
@@ -15,10 +15,8 @@ exports.getThisBudget = (req, res, next) => {
 
 exports.createBudget = (req, res, next) => {
     // parsing de l'objet budget
-    const budgetObject = JSON.parse(req.body.budget);
-    // création d'une instance du modèle Budget
     const budget = new Budget({
-         ...budgetObject
+         ...req.body
      });
     // enregistrement dans la base de données
      budget.save()
