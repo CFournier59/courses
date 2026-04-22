@@ -94,16 +94,6 @@ export async function getBook(id: string): Promise<Book | null> {
    }
 }
 
-export async function getBestRatedBooks(): Promise<Book[]> {
-   try {
-      const response = await axios.get<Book[]>(API_ROUTES.BEST_RATED)
-      return formatBooks(response.data)
-   } catch (err) {
-      console.error(err)
-      return []
-   }
-}
-
 export async function deleteBook(id: string): Promise<boolean> {
    try {
       await axios.delete(`${API_ROUTES.BOOKS}/${id}`, {
@@ -118,60 +108,21 @@ export async function deleteBook(id: string): Promise<boolean> {
    }
 }
 
-export async function rateBook(
-   id: string,
-   userId: string,
-   rating: number,
-): Promise<Book | string> {
-   const data = {
-      userId,
-      rating: Number(rating),
-   }
-
-   try {
-      const response = await axios.post<Book>(
-         `${API_ROUTES.BOOKS}/${id}/rating`,
-         data,
-         {
-            headers: {
-               Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-         },
-      )
-
-      return { ...response.data, id: response.data._id }
-   } catch (err: any) {
-      console.error(err)
-      return err.message
-   }
-}
-
-export async function addBook(data: any): Promise<any> {
+export async function addBudget(data: Number): Promise<any> {
+   console.log('adding budget with amount:', data)
    const userId = localStorage.getItem('userId') ?? ''
 
-   const book: Book = {
-      userId,
-      title: data.title,
-      author: data.author,
-      year: Number(data.year),
-      genre: data.genre,
-      ratings: [
-         {
-            userId,
-            grade: data.rating ? Number(data.rating) : 0,
-         },
-      ],
-      averageRating: Number(data.rating),
+   const budget: Budget = {
+      date: new Date(),
+      amount: data,
+      classified: false,
    }
 
-   const formData = new FormData()
-   formData.append('book', JSON.stringify(book))
-   formData.append('image', data.file[0])
-
    try {
-      return await axios.post(API_ROUTES.BOOKS, formData, {
+      return await axios.post(API_ROUTES.BUDGETS, budget, {
          headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
          },
       })
    } catch (err: any) {

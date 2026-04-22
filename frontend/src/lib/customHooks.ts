@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getAuthenticatedUser, getBestRatedBooks } from './common'
+import { getAuthenticatedUser } from './common'
 import type { Book } from './common'
 
 // -----------------------------

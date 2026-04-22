@@ -5,6 +5,7 @@ import { getFromLocalStorage, getBudgets, type Budget } from './lib/common'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
+import AddBudget from './pages/AddBudget'
 
 export default function App() {
    const [token, setToken] = useState<string | null>(
@@ -26,15 +27,18 @@ export default function App() {
          setBudgets(budgetsData)
       }
       loadData()
-      console.log(budgets)
    }, [token, navigate])
 
    return (
       <Routes>
-         <Route path="/" element={<Home />} />
+         <Route path="/" element={<Home budgets={budgets} />} />
          <Route
             path="/login"
             element={<Login setUser={setUser} setToken={setToken} />}
+         />
+         <Route
+            path="/add-budget"
+            element={<AddBudget setBudgets={setBudgets} />}
          />
       </Routes>
    )

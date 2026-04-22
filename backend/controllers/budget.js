@@ -15,10 +15,8 @@ exports.getThisBudget = (req, res, next) => {
 
 exports.createBudget = (req, res, next) => {
     // parsing de l'objet budget
-    const budgetObject = JSON.parse(req.body.budget);
-    // création d'une instance du modèle Budget
     const budget = new Budget({
-         ...budgetObject
+         ...req.body
      });
     // enregistrement dans la base de données
      budget.save()
