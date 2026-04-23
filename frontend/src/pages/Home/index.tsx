@@ -18,7 +18,7 @@ export default function Home({ budgets, setBudgets }: HomeProps) {
    )
 
    return (
-      <>
+      <div className="pb-30">
          {!currentBudget ? (
             <div>
                <h1 className="p-8">Aucun budget en cours...</h1>
@@ -58,6 +58,6 @@ export default function Home({ budgets, setBudgets }: HomeProps) {
                />
             </div>
          )}
-      </>
+      </div>
    )
 }

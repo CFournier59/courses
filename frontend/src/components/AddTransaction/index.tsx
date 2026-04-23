@@ -61,33 +61,113 @@ export default function AddTransaction({
          <Modal
             isOpen={isModalOpen}
             onRequestClose={() => setIsModalOpen(false)}
+            className="bg-charcoal border-2 border-turquoise p-6 shadow-xl w-full mx-4"
+            overlayClassName="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center"
          >
-            <h1>Ajouter une transaction</h1>
+            <h1>nouvelle transaction</h1>
             <form
                onSubmit={(e) => {
                   handleSubmit(e)
                   setIsModalOpen(false)
                }}
+               className="mt-6"
             >
-               <label htmlFor="name">qui?</label>
+               <label htmlFor="name" className="font-bold">
+                  qui ?
+               </label>
                <br />
-               <input type="radio" id="clem" name="name" value="clem" />
-               <label htmlFor="clem">clem</label>
-               <input type="radio" id="chlo" name="name" value="chlo" />
-               <label htmlFor="chlo">chlo</label>
+               <div className="flex justify-around">
+                  <div>
+                     <input
+                        type="radio"
+                        id="clem"
+                        name="name"
+                        value="clem"
+                        className="peer size-4 mr-2"
+                     />
+                     <label
+                        htmlFor="clem"
+                        className="peer-checked:text-canary peer-checked:font-bold peer-checked:underline"
+                     >
+                        clem
+                     </label>
+                  </div>
+                  <div>
+                     <input
+                        type="radio"
+                        id="chlo"
+                        name="name"
+                        value="chlo"
+                        className="peer size-4 mr-2"
+                     />
+                     <label
+                        htmlFor="chlo"
+                        className="peer-checked:text-turquoise peer-checked:font-bold peer-checked:underline"
+                     >
+                        chlo
+                     </label>
+                  </div>
+               </div>
                <br />
-               <label htmlFor="description">quoi?</label>
-               <input type="text" id="description" name="description" />
-               <br />
-               <label htmlFor="amount">combien?</label>
+               <label htmlFor="description" className="font-bold">
+                  quoi ?
+               </label>
                <input
-                  id="amount"
-                  name="amount"
                   type="text"
-                  inputMode="decimal"
-                  pattern="[0-9]+([.,][0-9]{1,2})?"
+                  id="description"
+                  name="description"
+                  className="bg-almond text-charcoal w-3/4 ml-4 h-10 text-center font-bold rounded-lg"
                />
-               <button type="submit">Ajouter</button>
+               <br />
+               <div className="mt-4">
+                  <label htmlFor="amount" className="font-bold">
+                     combien ?
+                  </label>
+                  <input
+                     id="amount"
+                     name="amount"
+                     type="text"
+                     inputMode="decimal"
+                     pattern="[0-9]+([.,][0-9]{1,2})?"
+                     className="bg-almond text-charcoal w-20 ml-4 h-10 text-center font-bold rounded-lg"
+                  />
+               </div>
+               <div className="flex justify-around mt-6 h-fit">
+                  <button
+                     type="submit"
+                     className="mx-auto border-4 border-bluue p-2 rounded-xl "
+                  >
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        className="text-canary size-8"
+                     >
+                        <path
+                           fill="currentColor"
+                           d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"
+                        />
+                     </svg>
+                  </button>
+                  <button
+                     onClick={() => setIsModalOpen(false)}
+                     className="mx-auto border-4 border-bluue p-2 rounded-xl"
+                  >
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        className="text-canary size-8"
+                     >
+                        <path
+                           fill="currentColor"
+                           d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"
+                        />
+                     </svg>
+                  </button>
+               </div>
             </form>
          </Modal>
       </>

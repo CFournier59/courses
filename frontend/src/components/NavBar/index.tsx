@@ -2,8 +2,11 @@ import { Link, useLocation } from 'react-router'
 
 export default function NavBar() {
    const location = useLocation()
+   if (location.pathname === '/login') {
+      return null
+   }
    return (
-      <nav className="fixed bottom-0 left-0 w-full ">
+      <nav className="fixed bottom-0 left-0 w-full bg-charcoal ">
          <ul className="flex justify-around py-6 border-t-2 border-bluue">
             <li>
                <Link to="/">

@@ -54,7 +54,7 @@ export default function BudgetTable({
                />
             )}
          </div>
-         <h2>
+         <h2 className={remaining > 0 ? 'text-almond' : 'text-red-500'}>
             Restant: {remaining.toFixed(2)} / {budget.amount.toFixed(2)} €
          </h2>
 
@@ -138,7 +138,9 @@ export default function BudgetTable({
                      >
                         {tx.userName}
                      </td>
-                     <td>{tx.description}</td>
+                     <td className="max-w-32 overflow-hidden text-ellipsis whitespace-nowrap">
+                        {tx.description}
+                     </td>
                      <td>{tx.amount.toFixed(2)} €</td>
                      {!budget.classified && (
                         <td>

@@ -16,5 +16,9 @@ export default function ThisBudget({ budgets }: BudgetProps) {
       return <div>Budget not found</div>
    }
 
-   return <BudgetTable budget={budget} />
+   return (
+      <div className="pb-30">
+         <BudgetTable budget={budget} />
+      </div>
+   )
 }
