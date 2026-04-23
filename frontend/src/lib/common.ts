@@ -4,11 +4,6 @@ import axios from 'axios'
 // Types
 // -----------------------------
 
-export interface Rating {
-   userId: string
-   grade: number
-}
-
 export interface Budget {
    _id?: string
    date: Date
@@ -21,6 +16,13 @@ export interface Transaction {
    budgetId: string
    userName: string
    date: Date
+   description: string
+   amount: number
+}
+
+interface AddTransactionInput {
+   budgetId: string
+   userName: string
    description: string
    amount: number
 }
@@ -95,7 +97,6 @@ export async function getBudgets(): Promise<Budget[]> {
 
 export async function addBudget(data: number): Promise<any> {
    console.log('adding budget with amount:', data)
-   const userId = localStorage.getItem('userId') ?? ''
 
    const budget: Budget = {
       date: new Date(),
@@ -157,7 +158,7 @@ export async function getTransactions(
    }
 }
 
-export async function addTransaction(data: Object): Promise<any> {
+export async function addTransaction(data: AddTransactionInput): Promise<any> {
    console.log('adding transaction with amount:', data)
 
    const transaction: Transaction = {
@@ -192,38 +193,5 @@ export async function deleteTransaction(id: string): Promise<boolean> {
    } catch (err) {
       console.error(err)
       return false
-   }
-}
-
-export async function updateBook(data: any, id: string): Promise<any> {
-   const userId = localStorage.getItem('userId') ?? ''
-
-   const book = {
-      userId,
-      title: data.title,
-      author: data.author,
-      year: number(data.year),
-      genre: data.genre,
-   }
-
-   let payload: FormData | typeof book
-
-   if (data.file?.[0]) {
-      payload = new FormData()
-      payload.append('book', JSON.stringify(book))
-      payload.append('image', data.file[0])
-   } else {
-      payload = book
-   }
-
-   try {
-      return await axios.put(`${API_ROUTES.BOOKS}/${id}`, payload, {
-         headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-         },
-      })
-   } catch (err: any) {
-      console.error(err)
-      return { error: true, message: err.message }
    }
 }

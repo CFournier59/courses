@@ -8,7 +8,6 @@ export const API_ROUTES = {
 } as const
 
 export const APP_ROUTES = {
-   SIGN_UP: '/Inscription',
    SIGN_IN: '/Connexion',
    ADD_BUDGET: '/Ajouter',
    BUDGET: '/budget/:id',
