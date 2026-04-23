@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import type { Budget, Transaction } from '../../lib/common'
 import { getTransactions } from '../../lib/common'
+
 import ClassifyBudget from '../ClassifyBudget'
+import RemoveTransaction from '../RemoveTransaction'
 
 interface BudgetTableProps {
    budget: Budget
@@ -64,6 +66,23 @@ export default function BudgetTable({
                      <td>{tx.userName}</td>
                      <td>{tx.description}</td>
                      <td>{tx.amount.toFixed(2)} €</td>
+                     {!budget.classified && (
+                        <td>
+                           <RemoveTransaction
+                              transaction={tx}
+                              onTransactionRemoved={() => {
+                                 // Refresh the transactions list
+                                 const fetchTransactions = async () => {
+                                    const txns = await getTransactions(
+                                       budget._id!,
+                                    )
+                                    setTransactions(txns)
+                                 }
+                                 fetchTransactions()
+                              }}
+                           />
+                        </td>
+                     )}
                   </tr>
                ))}
             </tbody>

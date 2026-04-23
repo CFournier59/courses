@@ -181,19 +181,9 @@ export async function addTransaction(data: Object): Promise<any> {
    }
 }
 
-export async function getBook(id: string): Promise<Book | null> {
+export async function deleteTransaction(id: string): Promise<boolean> {
    try {
-      const response = await axios.get<Book>(`${API_ROUTES.BOOKS}/${id}`)
-      return { ...response.data, id: response.data._id }
-   } catch (err) {
-      console.error(err)
-      return null
-   }
-}
-
-export async function deleteBook(id: string): Promise<boolean> {
-   try {
-      await axios.delete(`${API_ROUTES.BOOKS}/${id}`, {
+      await axios.delete(`${API_ROUTES.TRANSACTIONS}/${id}`, {
          headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
          },
