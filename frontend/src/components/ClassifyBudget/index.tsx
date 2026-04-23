@@ -36,8 +36,11 @@ export default function ClassifyBudget({
    const amountToTransfer = Math.abs(totalSpentClem - totalSpentChlo) / 2
    return (
       <>
-         <button onClick={() => setIsModalOpen(true)}>
-            Clôturer le budget
+         <button
+            className="border-4 border-bluue rounded-xl text-canary p-2 text-lg font-bold"
+            onClick={() => setIsModalOpen(true)}
+         >
+            Clôturer
          </button>
          <Modal
             isOpen={isModalOpen}
