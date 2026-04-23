@@ -1,12 +1,13 @@
 import Modal from 'react-modal'
 import { useState } from 'react'
-import { classifyBudget } from '../../lib/common'
+import { classifyBudget, getBudgets, type Budget } from '../../lib/common'
 
 interface ClassifyBudgetProps {
    budgetId: string
    totalSpentClem: number
    totalSpentChlo: number
    remaining: number
+   setBudgets: (budgets: Budget[]) => void
 }
 
 export default function ClassifyBudget({
@@ -14,6 +15,7 @@ export default function ClassifyBudget({
    totalSpentClem,
    totalSpentChlo,
    remaining,
+   setBudgets,
 }: ClassifyBudgetProps) {
    const [isModalOpen, setIsModalOpen] = useState(false)
    const [isClassified, setIsClassified] = useState(false)
@@ -22,6 +24,11 @@ export default function ClassifyBudget({
       classifyBudget(budgetId).then(() => {
          setIsClassified(true)
       })
+   }
+
+   const handleUpdateBudgets = async () => {
+      const budgets = await getBudgets()
+      setBudgets(budgets)
    }
 
    const giver = totalSpentClem < totalSpentChlo ? 'clem' : 'chlo'
@@ -53,43 +60,65 @@ export default function ClassifyBudget({
                <div>
                   <h1>Budget clôturé !</h1>
                   {remaining < 0 ? (
-                     <video
-                        preload="auto"
-                        loop
-                        autoPlay
-                        id="content"
-                        width="896"
-                        height="667"
-                        className=" rounded-xl"
-                     >
-                        <source
-                           src="https://media.tenor.com/K8ZxOY0X3acAAAPo/throwing-money-throwing-money-away.mp4"
-                           type="video/mp4"
-                        />
-                        <source
-                           src="https://media.tenor.com/K8ZxOY0X3acAAAPs/throwing-money-throwing-money-away.webm"
-                           type="video/webm"
-                        />
-                     </video>
+                     <div>
+                        <video
+                           preload="auto"
+                           loop
+                           autoPlay
+                           id="content"
+                           width="896"
+                           height="667"
+                           className=" rounded-xl"
+                        >
+                           <source
+                              src="https://media.tenor.com/K8ZxOY0X3acAAAPo/throwing-money-throwing-money-away.mp4"
+                              type="video/mp4"
+                           />
+                           <source
+                              src="https://media.tenor.com/K8ZxOY0X3acAAAPs/throwing-money-throwing-money-away.webm"
+                              type="video/webm"
+                           />
+                        </video>
+                        <p>restant: {remaining.toFixed(2)} €</p>
+                        <button
+                           onClick={() => {
+                              setIsModalOpen(false)
+                              handleUpdateBudgets()
+                           }}
+                        >
+                           Fermer
+                        </button>
+                     </div>
                   ) : (
-                     <video
-                        preload="auto"
-                        autoPlay
-                        loop
-                        id="content"
-                        width="896"
-                        height="627"
-                        className=" rounded-xl"
-                     >
-                        <source
-                           src="https://media.tenor.com/yqyHqTYHnBkAAAPo/thumbs-up-90s.mp4"
-                           type="video/mp4"
-                        />
-                        <source
-                           src="https://media.tenor.com/yqyHqTYHnBkAAAPs/thumbs-up-90s.webm"
-                           type="video/webm"
-                        />
-                     </video>
+                     <div>
+                        <video
+                           preload="auto"
+                           autoPlay
+                           loop
+                           id="content"
+                           width="896"
+                           height="627"
+                           className=" rounded-xl"
+                        >
+                           <source
+                              src="https://media.tenor.com/yqyHqTYHnBkAAAPo/thumbs-up-90s.mp4"
+                              type="video/mp4"
+                           />
+                           <source
+                              src="https://media.tenor.com/yqyHqTYHnBkAAAPs/thumbs-up-90s.webm"
+                              type="video/webm"
+                           />
+                        </video>
+                        <p>restant: {remaining.toFixed(2)} €</p>
+                        <button
+                           onClick={() => {
+                              setIsModalOpen(false)
+                              handleUpdateBudgets()
+                           }}
+                        >
+                           Fermer
+                        </button>
+                     </div>
                   )}
                </div>
             )}

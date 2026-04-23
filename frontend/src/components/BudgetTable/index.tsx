@@ -6,9 +6,14 @@ import ClassifyBudget from '../ClassifyBudget'
 interface BudgetTableProps {
    budget: Budget
    addedTsx: number
+   setBudgets: (budgets: Budget[]) => void
 }
 
-export default function BudgetTable({ budget, addedTsx }: BudgetTableProps) {
+export default function BudgetTable({
+   budget,
+   addedTsx,
+   setBudgets,
+}: BudgetTableProps) {
    const [transactions, setTransactions] = useState<Transaction[]>([])
 
    useEffect(() => {
@@ -40,6 +45,7 @@ export default function BudgetTable({ budget, addedTsx }: BudgetTableProps) {
                totalSpentClem={totalSpentClem}
                totalSpentChlo={totalSpentChlo}
                remaining={remaining}
+               setBudgets={setBudgets}
             />
          )}
          <table>

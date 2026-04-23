@@ -31,7 +31,10 @@ export default function App() {
 
    return (
       <Routes>
-         <Route path="/" element={<Home budgets={budgets} />} />
+         <Route
+            path="/"
+            element={<Home budgets={budgets} setBudgets={setBudgets} />}
+         />
          <Route
             path="/login"
             element={<Login setUser={setUser} setToken={setToken} />}

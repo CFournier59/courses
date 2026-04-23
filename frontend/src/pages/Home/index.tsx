@@ -7,9 +7,10 @@ import AddTransaction from '../../components/AddTransaction'
 
 interface HomeProps {
    budgets: Budget[]
+   setBudgets: (budgets: Budget[]) => void
 }
 
-export default function Home({ budgets }: HomeProps) {
+export default function Home({ budgets, setBudgets }: HomeProps) {
    const [AddedTsx, setAddedTsx] = useState(0)
 
    const currentBudget: Budget | undefined = budgets.find(
@@ -28,7 +29,11 @@ export default function Home({ budgets }: HomeProps) {
             </div>
          ) : (
             <div>
-               <BudgetTable budget={currentBudget} addedTsx={AddedTsx} />
+               <BudgetTable
+                  budget={currentBudget}
+                  addedTsx={AddedTsx}
+                  setBudgets={setBudgets}
+               />
                <AddTransaction
                   budgetId={currentBudget._id!}
                   onTransactionAdded={() => {
