@@ -7,8 +7,8 @@ import RemoveTransaction from '../RemoveTransaction'
 
 interface BudgetTableProps {
    budget: Budget
-   addedTsx: number
-   setBudgets: (budgets: Budget[]) => void
+   addedTsx?: number
+   setBudgets?: (budgets: Budget[]) => void
 }
 
 export default function BudgetTable({
