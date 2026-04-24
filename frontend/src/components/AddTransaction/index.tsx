@@ -1,6 +1,6 @@
 import Modal from 'react-modal'
 import { useState } from 'react'
-import { addTransaction, type Transaction } from '../../lib/common'
+import { addTransaction } from '../../lib/common'
 
 interface AddTransactionProps {
    budgetId: string

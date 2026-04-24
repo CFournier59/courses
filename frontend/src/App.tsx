@@ -15,7 +15,7 @@ export default function App() {
    const [token, setToken] = useState<string | null>(
       getFromLocalStorage('token'),
    )
-   const [user, setUser] = useState<SignInResponse | null>(null)
+   const [, setUser] = useState<SignInResponse | null>(null)
    const [budgets, setBudgets] = useState<Budget[]>([])
 
    const navigate = useNavigate()
