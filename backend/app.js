@@ -1,3 +1,5 @@
+console.log("App.js chargé");
+
 const express = require('express');
 const mongoose = require('mongoose');
 const budgetRoutes = require('./routes/budget');
