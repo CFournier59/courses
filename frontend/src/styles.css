@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+@theme {
+   --color-almond: #e6ccbe;
+   --color-charcoal: #4f4e4c;
+   --color-turquoise: #42d9c8;
+   --color-bluue: #6184d8;
+   --color-canary: #f0f465;
+}
+
+* {
+}
+
+body {
+   background-color: var(--color-charcoal);
+   color: var(--color-almond);
+}
+
+h1 {
+   font-size: 2rem;
+   font-weight: bold;
+}
+
+h2 {
+   font-size: 1.5rem;
+   font-weight: bold;
+}
+
+h3 {
+   font-size: 1.1rem;
+   font-weight: bold;
+}

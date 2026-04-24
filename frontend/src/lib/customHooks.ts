@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { getAuthenticatedUser } from './common'
-import type { Book } from './common'
 
 // -----------------------------
 // useUser
@@ -35,52 +34,4 @@ export function useUser(): UseUserReturn {
    }, [])
 
    return { connectedUser, auth, userLoading }
-}
-
-// -----------------------------
-// useBestRatedBooks
-// -----------------------------
-
-interface UseBestRatedBooksReturn {
-   bestRatedBooks: Book[]
-}
-
-export function useBestRatedBooks(): UseBestRatedBooksReturn {
-   const [bestRatedBooks, setBestRatedBooks] = useState<Book[]>([])
-
-   useEffect(() => {
-      async function getRatedBooks() {
-         const books = await getBestRatedBooks()
-         setBestRatedBooks(books)
-      }
-      getRatedBooks()
-   }, [])
-
-   return { bestRatedBooks }
-}
-
-// -----------------------------
-// useFilePreview
-// -----------------------------
-
-type FileInput = FileList | null | undefined
-
-export function useFilePreview(file: FileInput) {
-   const [imgSrc, setImgSrc] = useState<string | null>(null)
-
-   useEffect(() => {
-      if (file && file.length > 0) {
-         const newUrl = URL.createObjectURL(file[0])
-
-         if (newUrl !== imgSrc) {
-            setImgSrc(newUrl)
-         }
-
-         return () => {
-            URL.revokeObjectURL(newUrl)
-         }
-      }
-   }, [file?.[0]])
-
-   return [imgSrc, setImgSrc] as const
 }
