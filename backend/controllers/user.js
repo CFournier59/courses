@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv').config();
 
 exports.login = (req, res, next) => {
     User.findOne({name: req.body.name})
@@ -20,7 +21,7 @@ exports.login = (req, res, next) => {
                 // génération d'un token d'authentification
                 token: jwt.sign(
                     { userId: user._id },
-                    'oY7iF!qhxi$KytG#ji3!fhbGksyQq?45PpbGr5g!5itTzE8z$m6JbSki46YoTpDJ',
+                    process.env.JWT_SECRET,
                     { expiresIn: '150h' }
                 )
             })
