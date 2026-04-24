@@ -1,4 +1,5 @@
-export const API_URL = 'https://courses-backend-2asb.onrender.com'
+export const API_URL = import.meta.env.VITE_API_URL
+// export const API_URL = "https://localhost:4000/"
 
 export const API_ROUTES = {
    SIGN_IN: `${API_URL}/api/auth/login`,
