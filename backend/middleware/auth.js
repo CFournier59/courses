@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 // middleware d'authentification
 module.exports = (req, res, next) => {
+  console.log("auth...")
   try {
     // extraction et vérification du token
     const token = req.headers.authorization.split(' ')[1];

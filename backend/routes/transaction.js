@@ -8,7 +8,7 @@ router.get('/:id', transactionCtrl.getThisTransaction);
 
 
 
-router.post('/:id', auth, transactionCtrl.createTransaction);
+router.post('/', auth, transactionCtrl.createTransaction);
 router.delete('/:id', auth, transactionCtrl.deleteTransaction);
 
 
