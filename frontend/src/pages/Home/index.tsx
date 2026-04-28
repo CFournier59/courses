@@ -8,20 +8,25 @@ import AddTransaction from '../../components/AddTransaction'
 interface HomeProps {
    budgets: Budget[]
    setBudgets: (budgets: Budget[]) => void
+   loading: boolean
 }
 
-export default function Home({ budgets, setBudgets }: HomeProps) {
+export default function Home({ budgets, setBudgets, loading }: HomeProps) {
    const [AddedTsx, setAddedTsx] = useState(0)
 
    const currentBudget: Budget | undefined = budgets.find(
       (budget) => budget.classified === false,
    )
 
+   if (loading) {
+      return <p className="p-8">ça arrive...</p>
+   }
+
    return (
       <div className="pb-30">
          {!currentBudget ? (
             <div>
-               <h1 className="p-8">Aucun budget en cours...</h1>
+               <h1 className="p-8">Aucun budget en cours</h1>
                <Link to="/add-budget" className="block mt-20">
                   <button className="mx-auto border-4 border-bluue p-2 rounded-xl flex items-center gap-2">
                      <svg
