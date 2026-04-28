@@ -172,6 +172,9 @@ export default function BudgetTable({
             {totalSpentChlo.toFixed(2)} €
          </h3>
          <h3 className="mb-4">Total dépensé: {totalSpent.toFixed(2)} €</h3>
+         {budget.classified && (
+            <h3>Soit: {(totalSpent / 2).toFixed(2)} € par personne</h3>
+         )}
       </>
    )
 }
