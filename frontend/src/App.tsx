@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import AddBudget from './pages/AddBudget'
 import Archives from './pages/Archives'
 import ThisBudget from './pages/ThisBudget'
+import Graph from './pages/Graph'
 
 import NavBar from './components/NavBar'
 
@@ -60,6 +61,10 @@ export default function App() {
             <Route
                path="/archives"
                element={<Archives budgets={budgets} loading={loading} />}
+            />
+            <Route
+               path="/graph"
+               element={<Graph budgets={budgets} loading={loading} />}
             />
             <Route
                path="/budget/:id"

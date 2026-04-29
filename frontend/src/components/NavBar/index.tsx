@@ -48,6 +48,26 @@ export default function NavBar() {
                   </svg>
                </Link>
             </li>
+            <li>
+               <Link to="/graph">
+                  <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     className={`size-10 ${
+                        location.pathname === '/graph'
+                           ? 'text-canary'
+                           : 'text-almond'
+                     }`}
+                  >
+                     <path
+                        fill="currentColor"
+                        d="M22.8 11.819l-1.667 1.66-6.781-6.762-2.992 2.993-5.922-5.835-1.41 1.418 7.336 7.242 3.001-3.002 5.351 5.358-1.716 1.708 6 1.221-1.2-6.001zm1.2 8.181v2h-24v-20h2v18h22z"
+                     />
+                  </svg>
+               </Link>
+            </li>
          </ul>
       </nav>
    )

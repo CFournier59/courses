@@ -140,7 +140,7 @@ export async function classifyBudget(budgetId: string): Promise<any> {
 // -----------------------------
 
 export async function getTransactions(
-   budgetId: string,
+   budgetId: string | undefined,
 ): Promise<Transaction[]> {
    try {
       const response = await axios.get<Transaction[]>(
