@@ -5,17 +5,21 @@ import { deleteTransaction, type Transaction } from '../../lib/common'
 interface RemoveTransactionProps {
    transaction: Transaction
    onTransactionRemoved: () => void
+   setLoading: (loading: boolean) => void
 }
 
 export default function RemoveTransaction({
    transaction,
    onTransactionRemoved,
+   setLoading,
 }: RemoveTransactionProps) {
    const [isModalOpen, setIsModalOpen] = useState(false)
 
    const handleRemove = async () => {
+      setLoading(true)
       deleteTransaction(transaction._id!).then(() => {
          onTransactionRemoved()
+         setLoading(false)
       })
    }
 
@@ -55,7 +59,10 @@ export default function RemoveTransaction({
             </ul>
             <div className="flex justify-around mt-6 h-fit">
                <button
-                  onClick={handleRemove}
+                  onClick={() => {
+                     handleRemove()
+                     setIsModalOpen(false)
+                  }}
                   className="mx-auto border-4 border-bluue p-2 rounded-xl "
                >
                   <svg

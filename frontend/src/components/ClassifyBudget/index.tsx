@@ -18,11 +18,14 @@ export default function ClassifyBudget({
    setBudgets,
 }: ClassifyBudgetProps) {
    const [isModalOpen, setIsModalOpen] = useState(false)
+   const [isLoading, setIsLoading] = useState(false)
    const [isClassified, setIsClassified] = useState(false)
 
    const handleClassify = async () => {
+      setIsLoading(true)
       classifyBudget(budgetId).then(() => {
          setIsClassified(true)
+         setIsLoading(false)
       })
    }
 
@@ -88,20 +91,25 @@ export default function ClassifyBudget({
                   <div className="flex justify-around">
                      <button
                         onClick={handleClassify}
+                        disabled={isLoading}
                         className="mx-auto border-4 border-bluue p-2 rounded-xl flex items-center gap-2 mt-6"
                      >
-                        <svg
-                           xmlns="http://www.w3.org/2000/svg"
-                           width="24"
-                           height="24"
-                           viewBox="0 0 24 24"
-                           className="text-canary size-8"
-                        >
-                           <path
-                              fill="currentColor"
-                              d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"
-                           />
-                        </svg>
+                        {isLoading ? (
+                           <p className="text-canary">chargement...</p>
+                        ) : (
+                           <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              className="text-canary size-8"
+                           >
+                              <path
+                                 fill="currentColor"
+                                 d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"
+                              />
+                           </svg>
+                        )}
                      </button>
                      <button
                         onClick={() => setIsModalOpen(false)}

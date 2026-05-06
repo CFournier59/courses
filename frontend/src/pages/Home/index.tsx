@@ -9,9 +9,15 @@ interface HomeProps {
    budgets: Budget[]
    setBudgets: (budgets: Budget[]) => void
    loading: boolean
+   setLoading: (loading: boolean) => void
 }
 
-export default function Home({ budgets, setBudgets, loading }: HomeProps) {
+export default function Home({
+   budgets,
+   setBudgets,
+   loading,
+   setLoading,
+}: HomeProps) {
    const [AddedTsx, setAddedTsx] = useState(0)
 
    const currentBudget: Budget | undefined = budgets.find(
@@ -54,9 +60,12 @@ export default function Home({ budgets, setBudgets, loading }: HomeProps) {
                   budget={currentBudget}
                   addedTsx={AddedTsx}
                   setBudgets={setBudgets}
+                  loading={loading}
+                  setLoading={setLoading}
                />
                <AddTransaction
                   budgetId={currentBudget._id!}
+                  setLoading={setLoading}
                   onTransactionAdded={() => {
                      setAddedTsx((prev) => prev + 1)
                   }}

@@ -89,8 +89,15 @@ export async function getBudgets(): Promise<Budget[]> {
          },
       })
       return formatModel<Budget>(response.data)
-   } catch (err) {
+   } catch (err: any) {
       console.error(err)
+      if (err.response?.status === 401) {
+         localStorage.removeItem('token')
+         alert(
+            'session expirée, vous allez être redirigé(e) vers la page de connexion',
+         )
+         location.reload()
+      }
       return []
    }
 }

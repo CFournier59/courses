@@ -47,6 +47,7 @@ export default function App() {
                      budgets={budgets}
                      setBudgets={setBudgets}
                      loading={loading}
+                     setLoading={setLoading}
                   />
                }
             />

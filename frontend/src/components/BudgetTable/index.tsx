@@ -9,12 +9,16 @@ interface BudgetTableProps {
    budget: Budget
    addedTsx?: number
    setBudgets: (budgets: Budget[]) => void
+   loading: boolean
+   setLoading: (loading: boolean) => void
 }
 
 export default function BudgetTable({
    budget,
    addedTsx,
    setBudgets,
+   loading,
+   setLoading,
 }: BudgetTableProps) {
    const [transactions, setTransactions] = useState<Transaction[]>([])
 
@@ -145,6 +149,7 @@ export default function BudgetTable({
                      {!budget.classified && (
                         <td>
                            <RemoveTransaction
+                              setLoading={setLoading}
                               transaction={tx}
                               onTransactionRemoved={() => {
                                  // Refresh the transactions list
