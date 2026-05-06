@@ -60,7 +60,6 @@ export default function Home({
                   budget={currentBudget}
                   addedTsx={AddedTsx}
                   setBudgets={setBudgets}
-                  loading={loading}
                   setLoading={setLoading}
                />
                <AddTransaction
