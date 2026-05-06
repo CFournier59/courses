@@ -69,7 +69,9 @@ export default function App() {
             />
             <Route
                path="/budget/:id"
-               element={<ThisBudget budgets={budgets} />}
+               element={
+                  <ThisBudget budgets={budgets} setLoading={setLoading} />
+               }
             />
          </Routes>
          <NavBar />
