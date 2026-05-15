@@ -50,6 +50,7 @@ export default function Graph({ budgets, loading }: GraphProps) {
    const currentBudget = budgets.find((budget) => budget.classified === false)
 
    // Préparation des données pour le graphique
+   let remaining = 0
    const lastDayOfMonth = new Date()
    lastDayOfMonth.setMonth(lastDayOfMonth.getMonth() + 1)
    lastDayOfMonth.setDate(0)
@@ -57,11 +58,15 @@ export default function Graph({ budgets, loading }: GraphProps) {
    const daysInMonth = lastDayOfMonth.getDate()
    const xAxisData = Array.from({ length: daysInMonth }, (_, i) => i + 1)
 
-   // Données pour la ligne du budget initial
-   // Données pour la ligne du budget initial (rectiligne décroissante)
+   // Données pour la ligne du budget prévisonnel
+   // Données pour la ligne du budget prévisonnel (rectiligne décroissante)
    const dataSetA: number[] = []
    if (currentBudget) {
       const dailyDecrease = currentBudget.amount / daysInMonth // Montant à soustraire chaque jour
+      // Budget restant
+      remaining =
+         currentBudget.amount -
+         transactions.reduce((sum, tx) => sum + tx.amount, 0)
 
       for (let i = 1; i <= daysInMonth; i++) {
          const y = currentBudget.amount - dailyDecrease * (i - 1) // Décroît à chaque itération
@@ -81,50 +86,103 @@ export default function Graph({ budgets, loading }: GraphProps) {
       }, currentBudget?.amount || 0),
    )
 
-   // Affichage du chargement
-   if (loading) {
-      return <p className="p-8">ça arrive...</p>
-   }
+   // Jour actuel
+   const today = new Date().getDate()
 
-   console.log(dataSetA, dataSetB)
+   // Tronquer dataSetB pour s'arrêter au jour actuel
+   const dataSetBLimited = dataSetB.slice(0, today)
 
    return (
-      <div className="pb-30 h-200">
-         {/* Exemple d'utilisation avec MUI X Charts */}
-         {/* <LineChart series={[{ data: dataSetA }, { data: dataSetB }]} /> */}
-         <LineChart
-            series={[
-               {
-                  data: dataSetA,
-                  label: 'Budget initial',
-                  color: 'blue',
-               },
-               {
-                  data: dataSetB,
-                  label: 'Budget restant',
-                  color: 'red',
-               },
-            ]}
-            xAxis={[
-               {
-                  data: Array.from(
-                     { length: lastDayOfMonth.getDate() },
-                     (_, i) => i + 1,
-                  ), // [1, 2, 3, ..., 31]
-                  scaleType: 'linear',
-                  label: 'Jour du mois',
-                  valueFormatter: (value) => `${value}`, // Affiche le jour
-               },
-            ]}
-            yAxis={[
-               {
-                  label: 'Montant (€)',
-               },
-            ]}
-            height={400}
-            margin={{ left: 50, right: 50, top: 50, bottom: 50 }}
-         />
-         <p>Graphique à afficher ici</p>
-      </div>
+      <>
+         <h1 className="p-8">statistiques</h1>
+
+         {loading ? (
+            <p className="p-8">ça arrive...</p>
+         ) : (
+            <div className="pb-30 h-200">
+               {/* Exemple d'utilisation avec MUI X Charts */}
+               {/* <LineChart series={[{ data: dataSetA }, { data: dataSetB }]} /> */}
+               <LineChart
+                  series={[
+                     {
+                        data: dataSetA,
+                        label: 'Prévisions',
+                        color: '#42d9c8',
+                     },
+                     {
+                        data: dataSetBLimited,
+                        label: 'Budget restant',
+                        color: '#f0f465',
+                     },
+                  ]}
+                  xAxis={[
+                     {
+                        data: xAxisData, // [1, 2, 3, ..., 31]
+                        scaleType: 'linear',
+                        label: 'Jour du mois',
+                        valueFormatter: (value) => `${value}`, // Affiche le jour,
+                        sx: {
+                           '.MuiChartsAxis-label': {
+                              fill: '#e6ccbe',
+                              fontSize: 25,
+                           },
+                           '.MuiChartsAxis-tickLabel': {
+                              fill: '#e6ccbe',
+                              fontSize: 25,
+                           },
+                           '.MuiChartsAxis-line': { stroke: '#e6ccbe' },
+                           '.MuiChartsAxis-tick': { stroke: '#e6ccbe' },
+                        },
+                     },
+                  ]}
+                  yAxis={[
+                     {
+                        label: 'Montant (€)',
+                        sx: {
+                           '.MuiChartsAxis-label': {
+                              fill: '#e6ccbe',
+                              fontSize: 25,
+                           },
+                           '.MuiChartsAxis-tickLabel': {
+                              fill: '#e6ccbe',
+                              fontSize: 25,
+                           },
+                           '.MuiChartsAxis-line': { stroke: '#e6ccbe' },
+                           '.MuiChartsAxis-tick': { stroke: '#e6ccbe' },
+                        },
+                     },
+                  ]}
+                  grid={{ horizontal: true, vertical: false }}
+                  sx={{
+                     '.MuiChartsGrid-line': {
+                        stroke: '#935939',
+                        strokeDasharray: '4 4',
+                     },
+                  }}
+                  slotProps={{
+                     legend: {
+                        sx: {
+                           color: '#e6ccbe',
+                        },
+                     },
+                  }}
+                  height={400}
+                  margin={{ left: 50, right: 50, top: 50, bottom: 50 }}
+               />
+               <h2 className="text-almond">
+                  Aujourd'hui, le {today} du mois :
+               </h2>
+               <h3 className={remaining > 0 ? 'text-canary' : 'text-red-500'}>
+                  Restant: {remaining.toFixed(2)} €
+               </h3>
+               <h3 className="text-turquoise">
+                  Prévisionnel: {dataSetA[today - 1]} €
+               </h3>
+               <h3 className={remaining > 0 ? 'text-almond' : 'text-red-500'}>
+                  Écart: {(remaining - dataSetA[today - 1]).toFixed(2)} €
+               </h3>
+            </div>
+         )}
+      </>
    )
 }
