@@ -1,7 +1,7 @@
 const CACHE_NAME = 'app-cache-v1'
 
 // Liste des assets statiques à pré-cacher
-const STATIC_ASSETS = ['/', '/index.html', '/manifest.webmanifest']
+const STATIC_ASSETS = ['/', 'index.html', 'manifest.webmanifest']
 
 // 1) INSTALL — pré-cache des assets statiques
 self.addEventListener('install', (event) => {
@@ -45,7 +45,7 @@ self.addEventListener('fetch', (event) => {
          .catch(() => {
             // Si offline → fallback cache
             return caches.match(request).then((cached) => {
-               return cached || caches.match('/index.html')
+               return cached || caches.match('index.html')
             })
          }),
    )
