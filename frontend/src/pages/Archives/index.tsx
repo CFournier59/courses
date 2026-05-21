@@ -12,7 +12,7 @@ export default function Archives({ budgets, loading }: ArchivesProps) {
    }
 
    return (
-      <div className="pb-30">
+      <div className="pb-30 mx-2 max-w-full">
          <h1 className="p-8">Archives</h1>
          <ul className="mx-2">
             {budgets.map(

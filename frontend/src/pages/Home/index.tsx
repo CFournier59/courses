@@ -29,7 +29,7 @@ export default function Home({
    }
 
    return (
-      <div className="pb-30">
+      <div className="pb-30 mx-2 max-w-full">
          {!currentBudget ? (
             <div>
                <h1 className="p-8">Aucun budget en cours</h1>

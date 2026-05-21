@@ -18,7 +18,7 @@ export default function ThisBudget({ budgets, setLoading }: BudgetProps) {
    }
 
    return (
-      <div className="pb-30">
+      <div className="pb-30 mx-2 max-w-full">
          <BudgetTable
             budget={budget}
             setBudgets={setBudgets}

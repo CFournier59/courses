@@ -93,13 +93,13 @@ export default function Graph({ budgets, loading }: GraphProps) {
    const dataSetBLimited = dataSetB.slice(0, today)
 
    return (
-      <>
+      <div className="pb-30 mx-2 max-w-full">
          <h1 className="p-8">statistiques</h1>
 
          {loading ? (
             <p className="p-8">ça arrive...</p>
          ) : (
-            <div className="pb-30 h-200">
+            <div className="">
                {/* Exemple d'utilisation avec MUI X Charts */}
                {/* <LineChart series={[{ data: dataSetA }, { data: dataSetB }]} /> */}
                <LineChart
@@ -167,7 +167,7 @@ export default function Graph({ budgets, loading }: GraphProps) {
                      },
                   }}
                   height={400}
-                  margin={{ left: 50, right: 50, top: 50, bottom: 50 }}
+                  margin={{ left: 5, right: 15, top: 50, bottom: 50 }}
                />
                <h2 className="text-almond">
                   Aujourd'hui, le {today} du mois :
@@ -183,6 +183,6 @@ export default function Graph({ budgets, loading }: GraphProps) {
                </h3>
             </div>
          )}
-      </>
+      </div>
    )
 }
