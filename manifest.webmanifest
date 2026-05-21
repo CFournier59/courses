@@ -1,7 +1,8 @@
 {
    "name": "courses",
    "short_name": "courses",
-   "start_url": "/",
+   "start_url": "./",
+   "scope": "./",
    "display": "standalone",
    "background_color": "#4f4e4c",
    "theme_color": "#f0f465",
