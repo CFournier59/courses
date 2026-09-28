@@ -3,11 +3,16 @@ import type { Budget } from '../../lib/common'
 
 interface ArchivesProps {
    budgets: Budget[]
+   loading: boolean
 }
 
-export default function Archives({ budgets }: ArchivesProps) {
+export default function Archives({ budgets, loading }: ArchivesProps) {
+   if (loading) {
+      return <p className="p-8">ça arrive...</p>
+   }
+
    return (
-      <div className="pb-30">
+      <div className="pb-30 mx-2 max-w-full">
          <h1 className="p-8">Archives</h1>
          <ul className="mx-2">
             {budgets.map(

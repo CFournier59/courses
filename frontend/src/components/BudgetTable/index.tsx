@@ -8,13 +8,15 @@ import RemoveTransaction from '../RemoveTransaction'
 interface BudgetTableProps {
    budget: Budget
    addedTsx?: number
-   setBudgets?: (budgets: Budget[]) => void
+   setBudgets: (budgets: Budget[]) => void
+   setLoading: (loading: boolean) => void
 }
 
 export default function BudgetTable({
    budget,
    addedTsx,
    setBudgets,
+   setLoading,
 }: BudgetTableProps) {
    const [transactions, setTransactions] = useState<Transaction[]>([])
 
@@ -145,6 +147,7 @@ export default function BudgetTable({
                      {!budget.classified && (
                         <td>
                            <RemoveTransaction
+                              setLoading={setLoading}
                               transaction={tx}
                               onTransactionRemoved={() => {
                                  // Refresh the transactions list
@@ -172,6 +175,9 @@ export default function BudgetTable({
             {totalSpentChlo.toFixed(2)} €
          </h3>
          <h3 className="mb-4">Total dépensé: {totalSpent.toFixed(2)} €</h3>
+         {budget.classified && (
+            <h3>Soit: {(totalSpent / 2).toFixed(2)} € par personne</h3>
+         )}
       </>
    )
 }

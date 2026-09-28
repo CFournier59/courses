@@ -10,8 +10,7 @@ const bcrypt = require('bcrypt');
 async function run() {
   try {
     await mongoose.connect(
-      `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_DB}.okbdkgb.mongodb.net/courses?retryWrites=true&w=majority`
-    );
+      process.env.MONGO_URI);
 
     console.log('Connecté à MongoDB');
 

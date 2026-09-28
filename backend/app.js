@@ -1,3 +1,5 @@
+console.log("App.js chargé");
+
 const express = require('express');
 const mongoose = require('mongoose');
 const budgetRoutes = require('./routes/budget');
@@ -10,7 +12,7 @@ const path = require('path');
 const app = express();
 
 // connexion à la base de données MongoDB
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_DB}.okbdkgb.mongodb.net/courses?retryWrites=true&w=majority`)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 

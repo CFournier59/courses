@@ -9,6 +9,26 @@ export default function NavBar() {
       <nav className="fixed bottom-0 left-0 w-full bg-charcoal ">
          <ul className="flex justify-around py-6 border-t-2 border-bluue">
             <li>
+               <Link to="/archives">
+                  <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     className={`size-10 ${
+                        location.pathname === '/archives'
+                           ? 'text-canary'
+                           : 'text-almond'
+                     }`}
+                  >
+                     <path
+                        fill="currentColor"
+                        d="M22 0h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-4v8l-2-2-2 2v-8h-8.505c-1.375 0-1.375-2 0-2h16.505v-2z"
+                     />
+                  </svg>
+               </Link>
+            </li>
+            <li>
                <Link to="/">
                   <svg
                      xmlns="http://www.w3.org/2000/svg"
@@ -29,21 +49,21 @@ export default function NavBar() {
                </Link>
             </li>
             <li>
-               <Link to="/archives">
+               <Link to="/graph">
                   <svg
                      xmlns="http://www.w3.org/2000/svg"
                      width="24"
                      height="24"
                      viewBox="0 0 24 24"
                      className={`size-10 ${
-                        location.pathname === '/archives'
+                        location.pathname === '/graph'
                            ? 'text-canary'
                            : 'text-almond'
                      }`}
                   >
                      <path
                         fill="currentColor"
-                        d="M22 0h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-4v8l-2-2-2 2v-8h-8.505c-1.375 0-1.375-2 0-2h16.505v-2z"
+                        d="M22.8 11.819l-1.667 1.66-6.781-6.762-2.992 2.993-5.922-5.835-1.41 1.418 7.336 7.242 3.001-3.002 5.351 5.358-1.716 1.708 6 1.221-1.2-6.001zm1.2 8.181v2h-24v-20h2v18h22z"
                      />
                   </svg>
                </Link>

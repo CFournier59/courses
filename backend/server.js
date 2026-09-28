@@ -1,3 +1,5 @@
+console.log("Server.js lancé");
+
 const http = require('http');
 const app = require('./app');
 
