@@ -46,10 +46,15 @@ self.addEventListener('fetch', (event) => {
             caches.open(CACHE_NAME).then((cache) => cache.put(request, cloned))
             return response
          })
-         .catch(() => {
-            return caches.match(request).then((cached) => {
-               return cached || caches.match('./index.html')
-            })
+         .catch(async () => {
+            // On prévient l'appli que le réseau/backend ne répond pas
+            const clients = await self.clients.matchAll({ type: 'window' })
+            clients.forEach((client) =>
+               client.postMessage({ type: 'BACKEND_DOWN', url: request.url }),
+            )
+
+            const cached = await caches.match(request)
+            return cached || caches.match('./index.html')
          }),
    )
 })

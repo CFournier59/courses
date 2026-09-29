@@ -20,4 +20,10 @@ if ('serviceWorker' in navigator) {
          .then(() => console.log('Service Worker enregistré'))
          .catch((err) => console.error('Erreur SW :', err))
    })
+   navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data?.type === 'BACKEND_DOWN') {
+         alert("L'API n'a pas répondu, veuillez vérifier votre connexion")
+         // ou afficher un bandeau, un toast, etc. (pour la prochaine update)
+      }
+   })
 }
