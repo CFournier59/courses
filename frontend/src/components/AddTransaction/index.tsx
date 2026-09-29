@@ -1,20 +1,23 @@
 import Modal from 'react-modal'
 import { useState } from 'react'
-import { addTransaction, type Transaction } from '../../lib/common'
+import { addTransaction } from '../../lib/common'
 
 interface AddTransactionProps {
    budgetId: string
    onTransactionAdded: () => void
+   setLoading: (loading: boolean) => void
 }
 
 export default function AddTransaction({
    budgetId,
    onTransactionAdded,
+   setLoading,
 }: AddTransactionProps) {
    const [isModalOpen, setIsModalOpen] = useState(false)
 
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
+      setLoading(true)
       const formData = new FormData(e.currentTarget)
       // gestion de l'input amount
       const normalize = (formData.get('amount')?.toString() || '').replace(
@@ -32,6 +35,7 @@ export default function AddTransaction({
       // ajout du budget via l'API
       addTransaction(data).then(async () => {
          onTransactionAdded()
+         setLoading(false)
       })
    }
 

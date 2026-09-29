@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import AddBudget from './pages/AddBudget'
 import Archives from './pages/Archives'
 import ThisBudget from './pages/ThisBudget'
+import Graph from './pages/Graph'
 
 import NavBar from './components/NavBar'
 
@@ -15,8 +16,9 @@ export default function App() {
    const [token, setToken] = useState<string | null>(
       getFromLocalStorage('token'),
    )
-   const [user, setUser] = useState<SignInResponse | null>(null)
+   const [, setUser] = useState<SignInResponse | null>(null)
    const [budgets, setBudgets] = useState<Budget[]>([])
+   const [loading, setLoading] = useState(false)
 
    const navigate = useNavigate()
 
@@ -27,8 +29,10 @@ export default function App() {
       }
       // Si token existe → charger les données
       async function loadData() {
+         setLoading(true)
          const budgetsData = await getBudgets()
          setBudgets(budgetsData)
+         setLoading(false)
       }
       loadData()
    }, [token, navigate])
@@ -38,7 +42,14 @@ export default function App() {
          <Routes>
             <Route
                path="/"
-               element={<Home budgets={budgets} setBudgets={setBudgets} />}
+               element={
+                  <Home
+                     budgets={budgets}
+                     setBudgets={setBudgets}
+                     loading={loading}
+                     setLoading={setLoading}
+                  />
+               }
             />
             <Route
                path="/login"
@@ -48,10 +59,19 @@ export default function App() {
                path="/add-budget"
                element={<AddBudget setBudgets={setBudgets} />}
             />
-            <Route path="/archives" element={<Archives budgets={budgets} />} />
+            <Route
+               path="/archives"
+               element={<Archives budgets={budgets} loading={loading} />}
+            />
+            <Route
+               path="/graph"
+               element={<Graph budgets={budgets} loading={loading} />}
+            />
             <Route
                path="/budget/:id"
-               element={<ThisBudget budgets={budgets} />}
+               element={
+                  <ThisBudget budgets={budgets} setLoading={setLoading} />
+               }
             />
          </Routes>
          <NavBar />
