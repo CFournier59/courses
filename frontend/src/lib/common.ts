@@ -91,6 +91,10 @@ export async function getBudgets(): Promise<Budget[]> {
       return formatModel<Budget>(response.data)
    } catch (err: any) {
       console.error(err)
+      if (!err.response) {
+         alert("L'API n\a pas répondu, veuillez vérifier votre connexion")
+         return []
+      }
       if (err.response?.status === 401) {
          localStorage.removeItem('token')
          alert(
